@@ -1,0 +1,32 @@
+import { Flex, Text } from "@chakra-ui/react";
+import { useAppSelector } from "../app/hooks";
+import { selectwallet } from "../features/wallet.slice";
+
+interface WalletProps {}
+
+const Wallet: React.FC<WalletProps> = () => {
+  const wallet = useAppSelector(selectwallet);
+  return (
+    <Flex direction="column" p="4" w="full">
+      {wallet &&
+        wallet.map((alias) => (
+          <Flex key={alias.asset.toString()}>
+            <Flex justify="space-between">
+              <Text>Balance</Text>
+              <Text>{`${alias.balance} ${alias.asset}`}</Text>
+            </Flex>
+            <Flex justify="space-between">
+              <Text>Available Balance</Text>
+              <Text>{`${alias.availableBalance} ${alias.asset}`}</Text>
+            </Flex>
+            <Flex justify="space-between">
+              <Text>Cross Balance</Text>
+              <Text>{`${alias.crossWalletBalance} ${alias.asset}`}</Text>
+            </Flex>
+          </Flex>
+        ))}
+    </Flex>
+  );
+};
+
+export default Wallet;
